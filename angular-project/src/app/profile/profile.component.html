@@ -1,0 +1,21 @@
+<a routerLink="/search">Back</a>
+<h1>{{reg}}</h1>
+<div class="row">
+  <ul class="cbp_tmtimeline">
+    <li *ngFor="let event of collection">
+      <time class="cbp_tmtime">
+        <span class="hidden">{{ event.dateReg }}</span>
+        <span class="large">
+          {{ event.dateReg | date:"yyyy-MM-dd" }}<br/>
+          {{ event.dateReg | amTimeAgo }}
+        </span>
+      </time>
+      <div class="cbp_tmicon bg-info"><i class="fa fa-folder"></i></div>
+      <div class="cbp_tmlabel">
+        <h4>{{ event.operation.name }}</h4>
+        <p>{{ event.brand }} {{ event.model }}</p>
+        <p>{{ event.makeYear }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

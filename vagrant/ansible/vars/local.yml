@@ -1,0 +1,4 @@
+app_hostname: reg.loc
+app_hostname_aliases: ~
+
+database_bind_address: localhost

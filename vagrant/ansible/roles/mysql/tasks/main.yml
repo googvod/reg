@@ -1,0 +1,20 @@
+---
+- name: Install MySQL server
+  sudo: yes
+  apt:  pkg=mysql-server state=latest
+
+- name: Install Mysql package
+  action: apt pkg={{item}} state=present
+  sudo: true
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+
+- name: Create Application Database
+  sudo: true
+  mysql_db: name={{ database_name }} state=present
+
+- name: Create Application DB User
+  sudo: true
+  mysql_user: name={{ database_user }} password={{ database_password }} priv=*.*:ALL host='%' state=present

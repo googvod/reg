@@ -1,0 +1,57 @@
+---
+- name: Add PPA Repository
+  sudo: yes
+  apt_repository: repo="ppa:ondrej/php"
+
+- name: Update apt
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Install php packages
+  action: apt pkg={{item}} state=present
+  sudo: yes
+  with_items:
+     - php7.1-common
+     - php7.1-cli
+     - php7.1-intl
+     - php7.1-curl
+     - php7.1-cgi
+     - php7.1-fpm
+     - php7.1-mysql
+     - php7.1-gd
+     - php7.1-ldap
+     - php7.1-json
+     - php7.1-dev
+     - php7.1-zip
+     - php7.1-imagick
+     - php7.1-mbstring
+     - php7.1-bcmath
+     - php7.1-phpdbg
+     - php7.1-intl
+     - php7.1-dom
+     - php7.1-imap
+     - php7.1-mcrypt
+     - php-memcached
+     - php-xdebug
+
+- name: Copy www.conf
+  template: src=www.conf.j2 dest=/etc/php/7.1/fpm/pool.d/www.conf
+  sudo: yes
+
+- name: Update php.ini config
+  sudo: yes
+  shell: >
+
+      echo 'max_input_vars = 10000' >> /etc/php/7.1/fpm/php.ini;
+      echo 'upload_max_filesize = 20M' >> /etc/php/7.1/fpm/php.ini;
+      echo '[xdebug]' >> /etc/php/7.0/fpm/php.ini;
+      echo 'xdebug.remote_enable = 1' >> /etc/php/7.1/fpm/php.ini;
+      echo 'xdebug.remote_connect_back = 1' >> /etc/php/7.1/fpm/php.ini;
+      echo 'xdebug.remote_port = 9000' >> /etc/php/7.1/fpm/php.ini;
+      echo 'xdebug.remote_autostart= 1' >> /etc/php/7.1/fpm/php.ini;
+      echo 'xdebug.idekey = "XDEBUG_ECLIPSE"' >> /etc/php/7.1/fpm/php.ini;
+      echo 'xdebug.remote_handler = "dbgp"' >> /etc/php/7.1/fpm/php.ini;
+
+- name: Restart php-fpm
+  sudo: yes
+  action: service name=php7.1-fpm state=restarted

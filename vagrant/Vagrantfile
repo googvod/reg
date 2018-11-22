@@ -1,0 +1,39 @@
+# steps:
+# - create VM reg
+#   user: vagrant
+#   pass: vagrant
+# - install ansible
+# - run ansible
+# - reload nginx | always
+
+Vagrant.configure(2) do |config|
+  config.vm.hostname = "reg"
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "private_network", ip: "192.168.30.13"
+  config.vm.synced_folder "../../reg", "/var/www/reg", type: "nfs"
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = true
+    vb.name = "reg"
+
+    # Customize the amount of memory on the VM:
+    vb.memory = 1024
+    vb.cpus = 1
+  end
+
+  # Fix for the 'no tty' warning.
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  #config.vm.provision :shell, :inline => "sudo useradd -m -d /home/cars -s /bin/bash -p $(openssl passwd -1 1) hub"
+  config.vm.provision :shell, :inline => "sed -i '1ivagrant ALL=(ALL) NOPASSWD: ALL' /etc/sudoers"
+  #config.vm.provision :shell, :inline => "sudo chown cars:cars -R /var/www/reg"
+
+  config.vm.provision :shell, :inline => "sudo apt-get update"
+  config.vm.provision :shell, :inline => "sudo apt-get install -y software-properties-common"
+  config.vm.provision :shell, :inline => "sudo apt-add-repository -y -y ppa:ansible/ansible"
+  config.vm.provision :shell, :inline => "sudo apt-get update"
+  config.vm.provision :shell, :inline => "sudo apt-get install -y ansible"
+  config.vm.provision :shell, :inline => "ansible-playbook /var/www/reg/vagrant/ansible/application.yml -i /var/www/reg/vagrant/ansible/inventories/local.yml -f 5"
+  #run always after synced folder
+  config.vm.provision "shell", run: "always", inline: "sudo service nginx restart"
+end

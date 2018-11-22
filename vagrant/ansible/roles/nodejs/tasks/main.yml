@@ -1,0 +1,17 @@
+---
+  - name: Install nodejs
+    shell: "{{ item }}"
+    with_items:
+      - 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -'
+      - 'sudo apt-get install -y nodejs'
+    become: yes
+    become_user: "{{ app_user }}"
+
+  - name: Check is /usr/bin/node file exists
+    stat: path="/usr/bin/node"
+    register: node_file
+    ignore_errors: True
+
+  - name: Create nodejs symbolic link
+    command: "sudo ln -s /usr/bin/nodejs /usr/bin/node"
+    when: not node_file.stat.exists

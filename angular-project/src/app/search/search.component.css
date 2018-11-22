@@ -1,0 +1,8 @@
+.search-results {
+    min-height: 80px;
+}
+
+.search-results .btn {
+    width: 130px;
+    margin: 5px;
+}

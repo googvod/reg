@@ -1,0 +1,8 @@
+.panel-body {
+    height: 300px;
+    position: relative;
+}
+
+.type-chart-area {
+    display: block;
+}

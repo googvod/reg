@@ -1,0 +1,17 @@
+---
+- hosts: application
+  connection: local
+  user: vagrant
+  sudo: yes
+  roles:
+    - { role: common,     tags: [ 'application', 'vagrant' ] }
+    - { role: php-fpm,    tags: [ 'application', 'vagrant' ] }
+    - { role: composer,   tags: [ 'application', 'vagrant' ] }
+    - { role: mysql,      tags: [ 'application', 'vagrant' ] }
+    - { role: nginx,      tags: [ 'application', 'vagrant' ] }
+    - { role: nodejs,     tags: [ 'application', 'vagrant' ] }
+    #- { role: smtp,       tags: [ 'application', 'vagrant' ] }
+    #- { role: php-metrics,tags: [ 'application' ] }
+  vars_files:
+    - vars/all.yml
+    - vars/{{env}}.yml

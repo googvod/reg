@@ -1,0 +1,23 @@
+---
+
+  - name: Check tmp dir
+    stat: path="{{ app_project_root }}/public/tmp/cv"
+    register: tmp_dir
+    ignore_errors: True
+
+  - name: Create tmp dir
+    file: "path={{ app_project_root }}/public/tmp/cv state=directory owner={{ app_user }}"
+    when: not tmp_dir.stat.exists
+
+  - name: Check tmp dir
+    stat: path="{{ app_project_files }}"
+    register: files_dir
+    ignore_errors: True
+
+  - name: Create tmp dir
+    file: "path={{ app_project_files }} state=directory owner={{ app_user }}"
+    when: not files_dir.stat.exists
+
+  - name: Copy parameters.yml
+    template: src=parameters.conf.j2 dest={{app_project_root}}/config/config_{{ app_env }}.yml
+

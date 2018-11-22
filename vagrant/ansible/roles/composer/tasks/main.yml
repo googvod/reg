@@ -1,0 +1,25 @@
+---
+- name: Check if composer exists.
+  sudo: yes
+  stat: path=/usr/local/bin/composer
+  register: composer_file
+
+- name: Install Composer
+  sudo: yes
+  shell: >
+      curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+  when: composer_file.stat.exists == false
+
+- name: Update composer if already exists.
+  sudo: yes
+  shell: >
+      composer selfupdate
+  when: composer_file.stat.exists == true
+
+- name: Install Vendors (composer install)
+  composer:
+    command: install
+    no_dev: no
+    working_dir: "{{ app_project_root }}/project"
+  become: yes
+  become_user: "{{ app_user }}"

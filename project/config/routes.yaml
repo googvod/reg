@@ -1,0 +1,49 @@
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+app.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
+search:
+    path: /api/search
+    controller: App\Controller\IndexController::search
+    methods: GET
+
+brands:
+    path: /api/brands/{type}
+    controller: App\Controller\IndexController::getBrands
+    methods: GET
+    requirements:
+      type: .+
+    options:
+      utf8: true
+
+models:
+    path: /api/models/{type}/{brand}
+    controller: App\Controller\IndexController::getModels
+    methods: GET
+    requirements:
+      type: .+
+      brand: \w+
+
+dashboard:
+    path: /api/dashboard
+    controller: App\Controller\IndexController::getDashboardData
+    methods: GET
+
+types:
+    path: /api/types
+    controller: App\Controller\IndexController::getTypes
+    methods: GET
+
+details:
+    path: /api/details/{reg}
+    controller: App\Controller\IndexController::details
+    requirements:
+      reg: .+
+    methods: GET
+    options:
+      utf8: true

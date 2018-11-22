@@ -1,0 +1,8 @@
+---
+- name: "Install SMTP server"
+  sudo: yes
+  action: apt pkg=sendmail state=present
+
+- name: "Ensure SMTP is running"
+  sudo: yes
+  action: service name=sendmail state=started

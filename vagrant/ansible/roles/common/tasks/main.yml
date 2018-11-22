@@ -1,0 +1,16 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: install python-software-properties
+  action: apt pkg=python-software-properties state=present
+  sudo: yes
+
+- name: install web server packages
+  action: apt pkg={{item}} state=present
+  sudo: yes
+  with_items:
+    - curl
+    - wget
+    - git
+    - memcached
+    - mc

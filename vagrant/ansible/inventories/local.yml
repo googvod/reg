@@ -1,0 +1,11 @@
+[application]
+localhost
+
+[db]
+localhost
+
+[application:vars]
+env=local
+
+[db:vars]
+env=local

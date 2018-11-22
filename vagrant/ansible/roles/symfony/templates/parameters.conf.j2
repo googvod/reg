@@ -1,0 +1,59 @@
+imports:
+  - { resource: "config.yml" }
+
+parameters:
+
+  core.env: '{{ app_env }}'
+
+  debug: true
+
+  database_charset: 'utf8'
+  database_host: 'localhost'
+  database_username: '{{ database_user }}'
+  database_password: '{{ database_password }}'
+  database_name: '{{ database_name }}'
+  path.static_files: '{{ app_project_files }}'
+
+  people_base_host: 'http://partner.hub-dev.ciklum.net'
+  consultant_base_host: 'http://consultant.hub-dev.ciklum.net'
+
+  google.tracking.id: 'UA-64754342-2'
+
+  base_host: '{{ app_hostname }}'
+  base_scheme: 'http'
+
+  email.server:
+    host: 'imap.googlemail.com'
+    user: 'projectoffice.qaz'
+    password: 'qauser123456'
+    ssl: 'SSL'
+
+  email:
+    email_address: 'projectoffice.qa@gmail.com'
+    invoices: '%contacts.hub_team%'
+    project_create_NAV:
+        - '%contacts.hub_team%'
+    invoice_create_NAV:
+        - '%contacts.hub_team%'
+    project_contract_attached:
+        - '%contacts.hub_team%'
+
+  settings:
+    du_with_autoapproved_requests:
+      - 8
+      - 15
+      - 16
+      - 17
+      - 18
+      - 48
+    du_report_is_not_requred:
+      - 8
+    du_mbap_is_not_required:
+      - 8
+
+  logger.level: 100
+
+  jira.hub_support.enabled: false
+  rest_api.security.private_key: '58bb5214f380b8654de04736beca107c'
+
+  contacts.resources:  'po_hub@ciklum.com'

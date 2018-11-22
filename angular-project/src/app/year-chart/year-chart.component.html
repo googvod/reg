@@ -1,0 +1,63 @@
+
+<div class="row">
+    <div class="col-sm-6">
+        <app-type-chart [collection]="dictionary.types"></app-type-chart>
+    </div>
+    <div class="col-sm-6">
+        <app-brand-chart [collection]="dictionary.brands"></app-brand-chart>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-7">
+        <span *ngIf="isLoading" class="loader"></span>
+        <div style="display: block" *ngIf="!isLoading">
+            <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"></canvas>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <span *ngIf="isLoadingFilter" class="loader"></span>
+        <form class="form">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label">Types</label>
+                    <select class="form-control" [(ngModel)]="filter.type" name="type" (ngModelChange)="changeType($event)">
+                        <option *ngFor="let type of dictionary.types" [ngValue]="type.kind">
+                            {{type.kind}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label">Brand</label>
+                    <select class="form-control" [(ngModel)]="filter.brand" (ngModelChange)="changeBrand($event)" name="brand">
+                        <option></option>
+                        <option *ngFor="let brand of dictionary.brands" [ngValue]="brand.brand">
+                            {{brand.brand}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label">Model</label>
+                    <select class="form-control" [(ngModel)]="filter.model" name="model">
+                        <option></option>
+                        <option *ngFor="let model of dictionary.models" [ngValue]="model.model">
+                            {{model.model}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <button class="btn btn-success" type="submit" (click)="applyFilter()">Apply</button>
+            </div>
+        </form>
+    </div>
+</div>

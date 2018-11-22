@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Types</h3>
+    </div>
+    <div class="panel-body">
+        <div class="type-chart-area" *ngIf="chartLabels.length > 0">
+            <canvas baseChart
+                    [data]="chartData"
+                    [labels]="chartLabels"
+                    [chartType]="chartType"></canvas>
+        </div>
+    </div>
+</div>

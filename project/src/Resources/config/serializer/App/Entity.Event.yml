@@ -1,0 +1,29 @@
+App\Entity\Event:
+  exclusion_policy: all
+  properties:
+    id:
+      expose: true
+    fuel:
+      expose: true
+    operation:
+      expose: true
+    regAddrKoatuu:
+      expose: true
+      serialized_name: regAddrKoatuu
+    dateReg:
+      expose: true
+      serialized_name: dateReg
+    depCode:
+      expose: true
+      serialized_name: depCode
+    brand:
+      expose: true
+    model:
+      expose: true
+    makeYear:
+      expose: true
+      serialized_name: makeYear
+    color:
+      expose: true
+    purposed:
+      expose: true

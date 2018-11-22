@@ -1,0 +1,11 @@
+jms_serializer:
+  metadata:
+    cache: file
+    auto_detection: true
+    debug: "%kernel.debug%"
+    file_cache:
+      dir: "%kernel.cache_dir%/serializer"
+    directories:
+      App:
+        namespace_prefix: "App"
+        path: "%kernel.root_dir%/Resources/config/serializer/App"
